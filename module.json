@@ -1,0 +1,12 @@
+{
+  "name": "Webmunk Amazon Tools", 
+  "service_worker_scripts": [
+  ], 
+  "content_scripts": [
+    "js/content.js"
+  ], 
+  "permissions": [
+  ],
+  "host_permissions": [
+  ]
+}
