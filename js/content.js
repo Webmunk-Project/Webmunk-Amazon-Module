@@ -30,8 +30,6 @@
     ]
 
     $.expr.pseudos.isAmazonProductItem = $.expr.createPseudo(function (parameters) {
-      console.log('[Webmunk Amazon Tools] Setting up item selector...')
-
       return function (elem) {
         let isAmazonItem = false
 
@@ -43,36 +41,39 @@
           }
         })
 
-        clearSelectors.forEach(function (selector) {
-          if (isAmazonItem === false) {
-            // Do nothing
-          } else if ($(elem).is(parameters + selector)) {
-            isAmazonItem = false
-          }
-        })
+        if (isAmazonItem) {
+          clearSelectors.forEach(function (selector) {
+            if (isAmazonItem === false) {
+              // Do nothing
+            } else if ($(elem).is(parameters + selector)) {
+              isAmazonItem = false
+            }
+          })
+        }
 
         return isAmazonItem
       }
     })
 
     const addGroupSelectors = [
-      'div[data-asin]:has(span:webmunkContainsInsensitive("Amazon’s Choice"))', // Amazon's Choice
-      'div[data-asin]:has(span:webmunkContainsInsensitive("For you from our brands"))' // Amazon's Choice
+      // 'div[data-asin]:has(span:webmunkContainsInsensitive("Amazon’s Choice"))', // Amazon's Choice
+      // 'div[data-asin]:has(span:webmunkContainsInsensitive("For you from our brands"))' // Amazon's Choice
+      'div[data-asin]:has(span:webmunkContainsInsensitiveAny(["For you from our brands", "Amazon’s Choice"]))' // Amazon's Choice
     ]
 
     $.expr.pseudos.isAmazonProductGroup = $.expr.createPseudo(function (parameters) {
-      console.log('[Webmunk Amazon Tools] Setting up group selector...')
-
       return function (elem) {
         let isAmazonGroup = false
 
-        addGroupSelectors.forEach(function (selector) {
-          if (isAmazonGroup) {
-            // Do nothing
-          } else if ($(elem).is(parameters + selector)) {
-            isAmazonGroup = true
-          }
-        })
+        if ($(elem).is('div[data-asin!=""][data-asin]')) {
+          addGroupSelectors.forEach(function (selector) {
+            if (isAmazonGroup) {
+              // Do nothing
+            } else if ($(elem).is(parameters + selector)) {
+              isAmazonGroup = true
+            }
+          })
+        }
 
         return isAmazonGroup
       }
