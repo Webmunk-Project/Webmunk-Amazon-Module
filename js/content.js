@@ -21,8 +21,10 @@
     ]
 
     const clearSelectors = [
+      ':hidden', // Hidden items
+      ':has([data-video-url])', // Product videos
+      '[data-video-url]', // Product videos
       '#reviews-image-gallery-container', // Review images
-      '[data-video-url]', // Product videos,
       '.contributorNameID', // Authors / contributors,
       '#detailBullets_averageCustomerReviewsNameID', // Star reviews
       '#detailBullets_averageCustomerReviews', // Star reviews
